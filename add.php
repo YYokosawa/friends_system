@@ -7,18 +7,18 @@
 
 
 	<form method="post" action="add.php">
-			友達情報を入れてね！！<br /><br />
+			<h2>友達情報を入れてね！！</h2><br /><br />
 
-			名前
+			<h3>名前　*必須情報</h3>
 			<input name="code" type="text" style="width:100px"><br />
-			性別
+			<h3>性別　*必須情報</h3>
 			<input type="radio" name="sex" value="1" checked>男
 			<input type="radio" name="sex" value="2" >女
 			<br />
-			年齢
+			<h3>年齢　*必須情報</h3>
 			<input name="code" type="text" style="width:50px"><br />
 
-			出身地
+			<h3>出身地　*必須情報</h3>
 			<select name="area_id">
 				<!-- 	<option value="0" selected>選択して下さい</option>
 					<option value="1">北海道</option>
@@ -68,6 +68,8 @@
 					<option value="45">宮崎県</option>
 					<option value="46">鹿児島県</option>
 					<option value="47">沖縄県</option>
+
+					手書きでの選択フォームの入力の場合
  -->
 					<?php
 						$dsn ='mysql:dbname=tomodachi;host=localhost';
@@ -81,6 +83,8 @@
 						$sql = 'SELECT * FROM `area_table` WHERE 1';
 						$stmt = $dbh->prepare($sql);
 						$stmt->execute();
+						//データベースの情報を全部入れる
+
 							while (1) 
 							{
 							$rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -95,25 +99,25 @@
 							$dbh = null;
 
 					?>
-					<!-- while文でデータベースから呼び出し、繰り返し情報表示 -->
+					<!-- while文でデータベースから呼び出し、繰り返し情報表示　今回は都道府県リストの呼び出し -->
  				
 			</select><br />
+			<!-- 都道府県選択フォーム終了 -->
 
-			趣味
+			<h3>趣味</h3>
 			<input name="code" type="text" style="width:200px"><br />
 	</form>
+
 
 	<?php
 		$dsn ='mysql:dbname=tomodachi;host=localhost';
 		//mysqlに接続命令：どのデータベースに接続？；データベースのあるサーバーの場所
 		$user ='root';
 		$password ='mysql';
-		//xamppでは、指定がない場合は上記になる
+
 		$dbh = new PDO($dsn,$user,$password);
 		//$dbhによって接続
 		$dbh->query('SET NAMES utf8');
-		//
-		//SQL文による、アンケート自動保存機能の追加（上）
 
 		$nickname=$_POST['nickname'];
 		$sex=$_POST['sex'];
@@ -123,21 +127,59 @@
 		
 
 		$nickname=htmlspecialchars($nickname);
+		$age=htmlspecialchars($age);
+		$area_id=htmlspecialchars($area_id);
+		$hobby=htmlspecialchars($hobby);
 
 		// XSS(クロスサイトスクリプティング)でのいたずら防止
 
 
-		echo $nickname;
-		echo '様<br />';
-		echo 'ご意見ありがとうございました！<br />';
-		echo '頂いたご意見『';
-		echo $goiken;
-		echo '』<br />';
-		echo $email;
-		echo 'にメールを送りましたのでご確認下さい。';
+			// echo '<a href="index.html"><br />戻る</a>';　戻っても入力文が消える
+			// クリックしてもページを新しく開いてしまうため、当然フォームも真っ白になる
+			if($nickname=='' || $sex=='' || $age=='' || $area_id=='')
+			{
+				echo'<br />';
+				echo'未記入の必須項目があります！';
+				echo'<form>';
+				echo'<input type="button" onclick="history.back()" value="戻る">';
+				echo'</form>';
+			}
+			else
+			{
+				echo'<br />';
 
-		$sql ='INSERT INTO `survey`(`nickname`,`email`,`goiken`)VALUES("'.$nickname.'","'.$email.'","'.$goiken.'")';
-		var_dump($sql);
+				echo $area_id.'の友達を登録しました！';
+
+				echo '名前';
+				echo $nickname.'<br />';
+				echo '性別';
+				echo $sex.'<br />';
+				echo '年齢';
+				echo $age.'<br />';
+				echo '趣味';
+				echo $hobby.'<br />';
+				echo '登録日';
+				echo $created.'<br />';
+
+				// echo'<form method="post" action="friends.php">';
+				// echo'<input name="nickname" type="hidden" value="'.$nickname.'">';
+				// echo'<input name="email" type="hidden" value="'.$email.'">';
+				// echo'<input name="goiken" type="hidden" value="'.$goiken.'">';
+				echo'<input type="button" onclick="history.back()" value="戻る">';
+				echo"<a href=\"friends.php?area_id=$rec[area_id]\"><input type="submit" value="OK"></a>";
+				// echo'</form>';
+			}
+
+
+
+
+
+			
+
+
+		$sql ='INSERT INTO `frinends_table`(`area_id`,`nickname`,`sex`,`age`,`hobby`,`created`)VALUES("'.$area_id.'","'.$nickname.'","'.$sex.'","'.$age.'","'.$hobby.'",now())';
+		//var_dump($sql);
+
 		//テーブル名とフィールド名を``で囲うのが正解（ないと、場合によってはエラーが出る可能性もある）
 		$stmt =$dbh->prepare($sql);
 		//insert文を実行
@@ -147,8 +189,21 @@
 		$dbh = null;
 
 
-			echo '開発中';
 	?>
+	<?php
+			if (isset($_POST['moji'])){
+				//echo 'hello!'.$_POST['moji']; //関数未使用時表示
+				echo hello($_POST['moji']);
+			}
+
+			//引数として渡された文字の頭にhello!をつけて
+			//返り値として渡してあげる関数を作成（定義）せよ
+			//関数名はhelloにして下さい
+
+			function hello($moji){
+				return 'hello'.$moji;	//関数使用時表示	
+			}
+		?>
 
 		<a href="add.php"><input type="submit" value="OK!"></a>
 </body>
