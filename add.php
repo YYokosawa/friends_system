@@ -161,13 +161,13 @@
 				echo '登録日';
 				echo $created.'<br />';
 
-				// echo'<form method="post" action="friends.php">';
-				// echo'<input name="nickname" type="hidden" value="'.$nickname.'">';
-				// echo'<input name="email" type="hidden" value="'.$email.'">';
-				// echo'<input name="goiken" type="hidden" value="'.$goiken.'">';
+				echo'<form method="post" action="friends.php">';
+				echo'<input name="nickname" type="hidden" value="'.$nickname.'">';
+				echo'<input name="email" type="hidden" value="'.$email.'">';
+				echo'<input name="goiken" type="hidden" value="'.$goiken.'">';
 				echo'<input type="button" onclick="history.back()" value="戻る">';
-				echo"<a href=\"friends.php?area_id=$rec[area_id]\"><input type="submit" value="OK"></a>";
-				// echo'</form>';
+				echo'<input type="submit" value="OK">';
+				echo'</form>';
 			}
 
 
