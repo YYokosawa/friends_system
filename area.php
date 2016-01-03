@@ -67,10 +67,15 @@
 
 			// echo '<a href="friends.php">$rec['area']</a>';
 			//リンク付け間違い例
-
-			echo '<td>';
-			echo "<a href=\"friends.php?area_id=$rec[id]\">$rec[area]</a>";
-			echo '</td>';
+				if($date== 0){
+					echo '<td>';
+					echo "<a href=\"friends.php?area_id=$rec[id]\">$rec[area]</a>";
+					echo '</td>';
+				}else{
+					echo '<td>';
+					echo "<a href=\"friends.php?area_id=$rec[id]\">$rec[area]</a>";
+					echo '</td>';
+				}
 
 			echo '<td>';
 			echo $date['record_count'];
