@@ -22,6 +22,10 @@
 		// insert文を実行
 		$stmt->execute();
 		// データを全部くれというSQL文
+
+		$recordSet =mysqli_query($db, 'SELECT COUNT(area_id) AS reord_count FROM `friends_table`');
+		$date = mysqli_fetch_assoc($recoadSet);
+
 		echo '<TABLE border="1" cellpadding="2" align="left">';
 		//枠作成
 		echo '<tr>';
@@ -67,6 +71,11 @@
 			echo '<td>';
 			echo "<a href=\"friends.php?area_id=$rec[id]\">$rec[area]</a>";
 			echo '</td>';
+
+			echo '<td>';
+			echo $date['record_count'];
+			echo '</td>';
+
 			echo '</tr>';
 		}
 		echo '</table>';
