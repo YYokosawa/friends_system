@@ -22,8 +22,19 @@
 		// insert文を実行
 		$stmt->execute();
 		// データを全部くれというSQL文
-		echo '<TABLE border="1" cellpadding="10" align="left">';
+		echo '<TABLE border="1" cellpadding="2" align="left">';
 		//枠作成
+		echo '<tr>';
+	        	echo '<th>';
+	        		echo '都道府県No.';
+	        	echo '</th>';
+	        	echo '<th>';
+	        		echo '都道府県';
+	        	echo '</th>';
+	        	echo '<th>';
+	        		echo '友達人数';
+	        	echo '</th>';
+	        echo '</tr>';
 
 		while (1) 
 		{
@@ -32,10 +43,13 @@
 			//次の行が何もない時はfalseが返され、break(終了)となる
 			//fetch()の中は、どのようにfetchするかを示しており、決まり文句として覚えておく
 
+			
+
 			if($rec==false)
 			{
 				break;
 			}
+
 			echo '<tr>';
 			echo '<td>';
 			echo $rec['id'];
@@ -61,6 +75,5 @@
 		// データベースから切断
 		$dbh = null;
 	?>
-	</table>
 </body>
 </html>

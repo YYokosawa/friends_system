@@ -100,6 +100,19 @@
 			echo '<td>';
 			echo $rec['hobby'];
 			echo '</td>';
+
+
+			// echo '<td>';
+			// echo "<a href=\"add.php\"><input type=\"submit\" value=\"編集\"></a>";
+			// echo '</td>';
+
+
+			// echo '<td>';
+			 echo '<a href="list_delete.php?id=<?php echo h($post['id']); ?>" style="color: #F33;">削除</a>';
+			// echo '</td>';
+
+
+
 			echo '</tr>';
 
 		// var_dump($_GET['area_id']);
